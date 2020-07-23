@@ -1,5 +1,5 @@
-import pyfoobar
+import contspy
 
 
 def test_cli():
-    pyfoobar.show(["27"])
+    contspy.show(["27"])

@@ -1,8 +1,8 @@
-# pyfoobar contributing guidelines
+# contspy contributing guidelines
 
-The pyfoobar community appreciates your contributions via issues and
+The contspy community appreciates your contributions via issues and
 pull requests.  Note that the [code of conduct](CODE_OF_CONDUCT.md)
-applies to all interactions with the pyfoobar project, including
+applies to all interactions with the contspy project, including
 issues and pull requests.
 
 When submitting pull requests, please follow the style guidelines of

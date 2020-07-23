@@ -1,4 +1,4 @@
-# pyfoobar Code of Conduct
+# contspy Code of Conduct
 
 ## Our Pledge
 

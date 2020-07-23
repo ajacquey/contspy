@@ -16,7 +16,7 @@ def _get_parser():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description=("Dummy pyfoobar executable."),
+        description=("Dummy contspy executable."),
         formatter_class=argparse.RawTextHelpFormatter,
     )
 
@@ -25,7 +25,7 @@ def _get_parser():
     __copyright__ = "Copyright (c) 2019-2020 Nico Schlömer <nico.schloemer@gmail.com>"
     version_text = "\n".join(
         [
-            "pyfoobar {} [Python {}.{}.{}]".format(
+            "contspy {} [Python {}.{}.{}]".format(
                 __version__,
                 sys.version_info.major,
                 sys.version_info.minor,

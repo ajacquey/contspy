@@ -23,7 +23,7 @@ jobs:
       - run: pip3 install .[all]
       # The tests
       - run:
-          command: pytest --cov pyfoobar
+          command: pytest --cov contspy
           working_directory: test/
           env:
             MPLBACKEND: Agg

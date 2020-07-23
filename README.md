@@ -1,15 +1,15 @@
-# pyfoobar
+# contspy
 
-[![gh-actions](https://img.shields.io/github/workflow/status/nschloe/pyfoobar/ci?style=flat-square)](https://github.com/nschloe/pyfoobar/actions?query=workflow%3Aci)
-[![CircleCI](https://img.shields.io/circleci/project/github/nschloe/pyfoobar/master.svg?style=flat-square)](https://circleci.com/gh/nschloe/pyfoobar/tree/master)
-[![travis](https://img.shields.io/travis/nschloe/pyfoobar.svg?style=flat-square)](https://travis-ci.org/nschloe/pyfoobar)
-[![codecov](https://img.shields.io/codecov/c/github/nschloe/pyfoobar.svg?style=flat-square)](https://codecov.io/gh/nschloe/pyfoobar)
+[![gh-actions](https://img.shields.io/github/workflow/status/ajacquey/contspy/ci?style=flat-square)](https://github.com/ajacquey/contspy/actions?query=workflow%3Aci)
+[![CircleCI](https://img.shields.io/circleci/project/github/ajacquey/contspy/master.svg?style=flat-square)](https://circleci.com/gh/ajacquey/contspy/tree/master)
+[![travis](https://img.shields.io/travis/ajacquey/contspy.svg?style=flat-square)](https://travis-ci.org/ajacquey/contspy)
+[![codecov](https://img.shields.io/codecov/c/github/ajacquey/contspy.svg?style=flat-square)](https://codecov.io/gh/ajacquey/contspy)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
-[![awesome](https://img.shields.io/badge/awesome-yes-8209ba.svg?style=flat-square)](https://github.com/nschloe/pyfoobar)
-[![PyPI pyversions](https://img.shields.io/pypi/pyversions/pyfoobar.svg?style=flat-square)](https://pypi.org/pypi/pyfoobar/)
-[![PyPi Version](https://img.shields.io/pypi/v/pyfoobar.svg?style=flat-square)](https://pypi.org/project/pyfoobar)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/pyfoobar.svg?logo=github&label=Stars&logoColor=white&style=flat-square)](https://github.com/nschloe/pyfoobar)
-[![PyPi downloads](https://img.shields.io/pypi/dm/pyfoobar.svg?style=flat-square)](https://pypistats.org/packages/pyfoobar)
+[![awesome](https://img.shields.io/badge/awesome-yes-8209ba.svg?style=flat-square)](https://github.com/ajacquey/contspy)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/contspy.svg?style=flat-square)](https://pypi.org/pypi/contspy/)
+[![PyPi Version](https://img.shields.io/pypi/v/contspy.svg?style=flat-square)](https://pypi.org/project/contspy)
+[![GitHub stars](https://img.shields.io/github/stars/ajacquey/contspy.svg?logo=github&label=Stars&logoColor=white&style=flat-square)](https://github.com/ajacquey/contspy)
+[![PyPi downloads](https://img.shields.io/pypi/dm/contspy.svg?style=flat-square)](https://pypistats.org/packages/contspy)
 
 A Python project template that highlights some best practices in Python packaging. Can
 be used as a [GitHub
@@ -67,9 +67,9 @@ for your new Python project.
 
 First run
 ```
-find . -type f -print0 -name "*.py" -o -name Makefile -o -name "*.yml" | xargs -0 sed -i 's/pyfoobar/your-project-name/g'
+find . -type f -print0 -name "*.py" -o -name Makefile -o -name "*.yml" | xargs -0 sed -i 's/contspy/your-project-name/g'
 ```
-and rename the folder `pyfoobar` to customize the name.
+and rename the folder `contspy` to customize the name.
 
 There is a simple `Makefile` that can help you with certain tasks:
   * Run `make format` to apply formatting.
@@ -80,16 +80,16 @@ There is a simple `Makefile` that can help you with certain tasks:
 
     After publishing, people can install your package with
     ```
-    pip3 install pyfoobar
+    pip3 install contspy
     ```
 
 ### Testing
 
-To run the pyfoobar unit tests, check out this repository and type
+To run the contspy unit tests, check out this repository and type
 ```
 pytest
 ```
 
 ### License
 
-pyfoobar is published under the [MIT license](https://en.wikipedia.org/wiki/MIT_License).
+contspy is published under the [MIT license](https://en.wikipedia.org/wiki/MIT_License).

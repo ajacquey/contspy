@@ -3,7 +3,7 @@ from .cli import show
 from .main import solve
 
 __all__ = [
-    "__version__",
-    "solve",
-    "show",
+  "__version__",
+  "solve",
+  "show",
 ]

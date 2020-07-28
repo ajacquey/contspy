@@ -233,7 +233,7 @@ def Newton_corrector(
         print(f"{num_newton_steps} Nonlinear |R| = ", colored(f"{Rnrm:.6e}", color))
 
     # Here, no solutions have been found after max_iters iterations
-    print(f"Solve diverged due to MAX_ITER.")
+    print("Solve diverged due to MAX_ITER.")
     print("lmbda = {}, ||x|| = {}".format(lmbda, np.linalg.norm(x)))
     print(colored("Solve did NOT converge!", "red"))
     return x, lmbda, newton_success
@@ -336,7 +336,7 @@ def turning_point_locator(
         print(f"{num_newton_steps} Nonlinear |R| = ", colored(f"{Rnrm:.6e}", color))
 
     # Here, no solutions have been found after max_iters iterations
-    print(f"Solve diverged due to MAX_ITER.")
+    print("Solve diverged due to MAX_ITER.")
     print("lmbda = {}, ||x|| = {}".format(lmbda, np.linalg.norm(x)))
     print(colored("Solve did NOT converge!", "red"))
     return x, lmbda, newton_success
@@ -512,7 +512,7 @@ def hopf_point_locator(
         print(f"{num_newton_steps} Nonlinear |R| = ", colored(f"{Rnrm:.6e}", color))
 
     # Here, no solutions have been found after max_iters iterations
-    print(f"Solve diverged due to MAX_ITER.")
+    print("Solve diverged due to MAX_ITER.")
     print("lmbda = {}, ||x|| = {}".format(lmbda, np.linalg.norm(x)))
     print(colored("Solve did NOT converge!", "red"))
     return x, lmbda, newton_success

@@ -2,4 +2,4 @@ import contspy
 
 
 def test_cli():
-  contspy.show(["27"])
+    contspy.show(["27"])

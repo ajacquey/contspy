@@ -2,4 +2,4 @@ import contspy
 
 
 def test_solve():
-  assert contspy.solve() == 42
+    assert contspy.solve() == 42

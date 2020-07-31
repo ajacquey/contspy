@@ -83,20 +83,30 @@ class Continuation:
             if k > max_steps:
                 break
 
-            print()
-            print(f"Step {k}, s = {s:.3e}, ds = {ds:.3e}")
+            newton_success = False
+            # Loop in case solve fails
+            while True:
+                if newton_success:
+                    break
 
-            (
-                newton_success,
-                u,
-                lmbda,
-                du_ds,
-                dlmbda_ds,
-                stability,
-                oscillation,
-                saddle,
-                hopf,
-            ) = self.step(ds, abs_tol, rel_tol, max_iters)
+                print()
+                print(f"Step {k}, s = {s:.3e}, ds = {ds:.3e}")
+
+                (
+                    newton_success,
+                    u,
+                    lmbda,
+                    du_ds,
+                    dlmbda_ds,
+                    stability,
+                    oscillation,
+                    saddle,
+                    hopf,
+                ) = self.step(ds, abs_tol, rel_tol, max_iters)
+
+                # Cut step size
+                if ~newton_success:
+                    ds /= 2.0
 
             # Save current calues
             self.u = u

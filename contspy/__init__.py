@@ -1,5 +1,11 @@
-from .__about__ import __version__
-from .cli import show
+from .__about__ import __author__, __email__, __license__, __status__, __version__
 from .main import Continuation
 
-__all__ = ["__version__", "show", "Continuation"]
+__all__ = [
+    "__author__",
+    "__email__",
+    "__license__",
+    "__status__",
+    "__version__",
+    "Continuation",
+]

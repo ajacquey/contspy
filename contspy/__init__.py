@@ -1,9 +1,5 @@
 from .__about__ import __version__
 from .cli import show
-from .main import solve
+from .main import Continuation
 
-__all__ = [
-    "__version__",
-    "solve",
-    "show",
-]
+__all__ = ["__version__", "show", "Continuation"]

@@ -22,7 +22,14 @@ def write_output(output_fname, u, lmbda, stability, oscillation, saddle, hopf):
     """
     Output continuation step in a CSV file
 """
-    results = [lmbda, np.linalg.norm(u, np.inf), stability, oscillation, saddle, hopf]
+    results = [
+        lmbda,
+        np.linalg.norm(u, np.inf),
+        int(stability),
+        int(oscillation),
+        int(saddle),
+        int(hopf),
+    ]
     with open(output_fname, "a+", newline="") as write_obj:
         # Create a writer object from csv module
         csv_writer = csv.writer(write_obj)

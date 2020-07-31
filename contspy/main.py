@@ -105,7 +105,7 @@ class Continuation:
                 ) = self.step(ds, abs_tol, rel_tol, max_iters)
 
                 # Cut step size
-                if ~newton_success:
+                if not newton_success:
                     ds /= 2.0
 
             # Save current calues

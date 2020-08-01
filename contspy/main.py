@@ -40,8 +40,8 @@ class Continuation:
         lmbda0,
         step_size,
         max_steps,
-        abs_tol=1.0e-10,
-        rel_tol=1.0e-10,
+        abs_tol=1.0e-08,
+        rel_tol=1.0e-08,
         max_iters=200,
         filename=None,
     ):
@@ -140,7 +140,7 @@ class Continuation:
         """
     """
         # du/dlmbda
-        delta = 1.0e-06
+        delta = 1.0e-08
         eps1 = delta * (np.abs(lmbda) + delta)
         dRes_dlmbda = (self.Res(u, lmbda + eps1) - self.Res(u, lmbda)) / eps1
         du_dlmbda = np.linalg.solve(self.Jac(u, lmbda), -dRes_dlmbda)
@@ -234,8 +234,8 @@ class Continuation:
             saddle = False
             hopf = True
 
-            # Update tangents
-            du_ds, dlmbda_ds = self.tangent_predictor(u, lmbda, ds)
+            # # Update tangents
+            # du_ds, dlmbda_ds = self.tangent_predictor(u, lmbda, ds)
 
         # Check saddle point
         elif self.dlmbda_ds * dlmbda_ds < 0.0:
@@ -247,8 +247,8 @@ class Continuation:
             saddle = True
             hopf = False
 
-            # Update tangents
-            du_ds, dlmbda_ds = self.tangent_predictor(u, lmbda, ds)
+            # # Update tangents
+            # du_ds, dlmbda_ds = self.tangent_predictor(u, lmbda, ds)
 
         return (
             newton_success,

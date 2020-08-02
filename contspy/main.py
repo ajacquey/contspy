@@ -44,6 +44,7 @@ class Continuation:
         rel_tol=1.0e-08,
         max_iters=200,
         filename=None,
+        output_steps=False,
     ):
         """
         Pseudo arc length continuation
@@ -62,7 +63,9 @@ class Continuation:
         s = 0  # arc length
         n_saddle = 0
         n_hopf = 0
-        output_fname = self.initial_step(u0, lmbda0, step_size, filename)
+        output_fname, output_steps_fname = self.initial_step(
+            u0, lmbda0, step_size, filename, output_steps
+        )
 
         # # Check regularity and stability of new point
         # eigvals = np.linalg.eigvals(self.Jac(u, lmbda))
@@ -116,7 +119,16 @@ class Continuation:
 
             # Output results
             write_output(
-                output_fname, self.u, self.lmbda, stability, oscillation, saddle, hopf
+                k,
+                output_fname,
+                output_steps_fname,
+                self.x,
+                self.u,
+                self.lmbda,
+                stability,
+                oscillation,
+                saddle,
+                hopf,
             )
 
             # Iteration
@@ -159,13 +171,14 @@ class Continuation:
 
         return du_ds, dlmbda_ds
 
-    def initial_step(self, u0, lmbda, ds, filename):
+    def initial_step(self, u0, lmbda, ds, filename, output_steps):
         """
         Calculate trivial solution with initial bifurcation parameter
         INPUT
         u0: initial guess of the solution
         lmbda: initial bifurcation parameter
         filename: base file name for continuation output
+        output_steps: boolean to specify whether each step should be outputted
         OUTPUT
         u: initial solution
         output_fname: output file name (with path) for continuation output
@@ -189,7 +202,8 @@ class Continuation:
 
         # Update tangents
         self.du_ds, self.dlmbda_ds = self.tangent_predictor(u, lmbda, ds)
-        # Output initial results
+
+        # Continuation output: initial results
         headers_output = [
             "lambda",
             "u_norm",
@@ -198,11 +212,24 @@ class Continuation:
             "saddle",
             "hopf",
         ]
-        output_fname = initialize_output(filename, headers_output)
-        write_output(output_fname, self.u, self.lmbda, True, False, False, False)
+        output_fname, output_steps_fname = initialize_output(
+            filename, headers_output, output_steps
+        )
+        write_output(
+            0,
+            output_fname,
+            output_steps_fname,
+            self.x,
+            self.u,
+            self.lmbda,
+            True,
+            False,
+            False,
+            False,
+        )
         print("lmbda = {}, ||x|| = {}".format(self.lmbda, np.linalg.norm(self.u)))
 
-        return output_fname
+        return output_fname, output_steps_fname
 
     def step(self, ds, abs_tol, rel_tol, max_iters):
         """

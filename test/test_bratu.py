@@ -3,7 +3,7 @@
 import numpy as np
 
 # import sys
-# # sys.path.insert(0, '/Users/ajacquey/projects/contspy/')
+# sys.path.insert(0, "/Users/ajacquey/projects/contspy/")
 from contspy import Continuation, plot_continuation_results
 
 

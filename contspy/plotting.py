@@ -46,6 +46,9 @@ def plot_continuation_results(filename):
     """
 
 """
+    # Path to script
+    script_file = os.path.abspath(sys.argv[0]).split("/")[-1]
+    filename = os.path.abspath(sys.argv[0]).replace(script_file, filename)
     # Check if file exists
     if not os.path.exists(filename):
         raise Exception(

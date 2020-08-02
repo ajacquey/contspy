@@ -2,8 +2,8 @@
 
 import numpy as np
 
-import sys
-sys.path.insert(0, '/Users/ajacquey/projects/contspy/')
+# import sys
+# sys.path.insert(0, '/Users/ajacquey/projects/contspy/')
 from contspy import Continuation, plot_continuation_results
 
 
@@ -11,7 +11,7 @@ class SCurve(Continuation):
     def __init__(self, L, N):
         Continuation.__init__(self, L, N)
         self.Ar = 5.0
-    
+
     def Res(self, u, lmbda):
         """
       The residual to solve for the system
@@ -22,7 +22,9 @@ class SCurve(Continuation):
         """
       The jacobian of the system
     """
-        return self.D2 + lmbda * self.Ar * np.diag(np.divide(np.exp(np.divide(self.Ar * u, 1.0 + u)), np.square(1.0 + u)))
+        return self.D2 + lmbda * self.Ar * np.diag(
+            np.divide(np.exp(np.divide(self.Ar * u, 1.0 + u)), np.square(1.0 + u))
+        )
 
 
 def test_s_curve():

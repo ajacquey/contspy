@@ -1,4 +1,3 @@
-import csv
 import os
 import sys
 
@@ -10,11 +9,9 @@ def initialize_output(filename, headers, output_steps):
     Initialize the output of continuation in a CSV file
 """
     output_fname = get_output_filename(filename)
-    with open(output_fname, "w", newline="") as write_obj:
-        # Create a writer object from csv module
-        csv_writer = csv.writer(write_obj)
-        # Add contents of list as last row in the csv file
-        csv_writer.writerow(headers)
+    np.savetxt(
+        output_fname, [np.asarray(headers)], delimiter=",", fmt="%s", comments=""
+    )
 
     if output_steps:
         # Here we need to create the folder 'steps' if it does not exist
@@ -59,11 +56,15 @@ def write_output(
         int(saddle),
         int(hopf),
     ]
+
     with open(output_fname, "a+", newline="") as write_obj:
-        # Create a writer object from csv module
-        csv_writer = csv.writer(write_obj)
-        # Add contents of list as last row in the csv file
-        csv_writer.writerow(results)
+        np.savetxt(
+            write_obj,
+            [results],
+            fmt=["%1.4e", "%1.4e", "%1i", "%1i", "%1i", "%1i"],
+            comments="",
+            delimiter=",",
+        )
 
     # Spectral
     if bool(output_steps_fname):  # string not empty

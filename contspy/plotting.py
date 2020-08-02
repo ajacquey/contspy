@@ -1,45 +1,8 @@
-import csv
 import os
 import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
-
-
-def parseCsvFile(filename, column_keys=None):
-    column_index = {}  # mapping, key=column_key, value=corresponding column index
-    data = {}  # dict of data, key=column_key, value=data list (floats)
-    with open(filename, "r") as csvfile:
-        csvreader = csv.reader(csvfile)
-        line_i = 0  # line index
-        for row in csvreader:
-            if line_i == 0:
-                # Headers. Find interesting columns
-                headers = row
-                # prepare structure for all columns we want
-                if column_keys is None:
-                    # grab all data in file
-                    column_keys_we_want = [elt.lower() for elt in headers]
-                else:
-                    # grab only requested data from file
-                    assert type(column_keys) == type([])
-                    column_keys_we_want = column_keys
-                for column_key in column_keys_we_want:
-                    data[column_key] = []
-                for column_i, elt in enumerate(headers):
-                    elt_lower = elt.lower()
-                    if elt_lower in column_keys_we_want:
-                        column_index[elt_lower] = column_i
-                line_i += 1
-                continue
-            # Data line
-            if len(row) < len(headers):
-                break  # finished reading all data
-            for column_key in column_keys_we_want:
-                data[column_key].append(float(row[column_index[column_key]]))
-            line_i += 1
-            continue  # go to next data line
-    return data
 
 
 def plot_continuation_results(filename):
@@ -61,14 +24,17 @@ def plot_continuation_results(filename):
     print("Reading data stored in file", filename, "...")
 
     # Load data
-    data = parseCsvFile(filename)
-    # Unpack data
-    lmbda = np.asarray(data["lambda"])
-    u_norm = np.asarray(data["u_norm"])
-    stability = np.asarray(data["stability"], dtype=bool)
-    oscillation = np.asarray(data["oscillation"], dtype=bool)
-    saddle = np.asarray(data["saddle"], dtype=bool)
-    hopf = np.asarray(data["hopf"], dtype=bool)
+    lmbda, u_norm = np.loadtxt(
+        filename, dtype=float, delimiter=",", skiprows=1, unpack=True, usecols=[0, 1]
+    )
+    stability, oscillation, saddle, hopf = np.loadtxt(
+        filename,
+        dtype=bool,
+        delimiter=",",
+        skiprows=1,
+        unpack=True,
+        usecols=[2, 3, 4, 5],
+    )
 
     # Handle data to prepare arrays to plot
     u_norm_stable_reg = np.ones_like(u_norm) * np.NaN

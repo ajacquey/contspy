@@ -7,7 +7,7 @@ from .spectral import applyBC, cheb
 
 
 class Continuation:
-    def __init__(self, L=1.0, N=20, output_file_base=None):
+    def __init__(self, L=1.0, N=20, nvar=1, output_file_base=None):
         # Settings for spectral elements method
         self.L = L  # lengh of the domain
         self.N = N  # N must be even
@@ -15,6 +15,8 @@ class Continuation:
         # Boundary conditions
         self.D = applyBC(self.D)
         self.D2 = applyBC(self.D2)
+        # Number of variables
+        self.nvar = nvar
 
     def Res(self, u, lmbda):
         """
@@ -125,6 +127,7 @@ class Continuation:
                 self.x,
                 self.u,
                 self.lmbda,
+                self.nvar,
                 stability,
                 oscillation,
                 saddle,
@@ -189,7 +192,18 @@ class Continuation:
         print()
         print(f"Step {k0}, s = {s0:.3e}, ds = {ds0:.3e}")
 
-        u0 = applyBC(u0)
+        # Get number of variables
+        if len(u0) != (self.nvar * (self.N + 1)):
+            raise Exception(
+                "Size of the initial guess",
+                len(u0),
+                "does not match grid resolution and number of variables. Size should be ",
+                self.nvar * (self.N + 1),
+            )
+        u0_vars = np.split(u0, self.nvar)
+        for i in range(self.nvar):
+            u0_vars[i] = applyBC(u0_vars[i])
+        u0 = np.hstack(u0_vars)
         # Get initial solution
         u, _ = solve_Newton(
             lambda u: self.Res(u, lmbda), lambda u: self.Jac(u, lmbda), u0
@@ -204,14 +218,25 @@ class Continuation:
         self.du_ds, self.dlmbda_ds = self.tangent_predictor(u, lmbda, ds)
 
         # Continuation output: initial results
-        headers_output = [
-            "lambda",
-            "u_norm",
-            "stability",
-            "oscillation",
-            "saddle",
-            "hopf",
-        ]
+        if self.nvar > 1:
+            headers_vars = ["u" + str(int(k)) + "_norm" for k in range(self.nvar)]
+            headers_output = [
+                "lambda",
+                "stability",
+                "oscillation",
+                "saddle",
+                "hopf",
+            ]
+            headers_output[1:1] = headers_vars
+        else:
+            headers_output = [
+                "lambda",
+                "u_norm",
+                "stability",
+                "oscillation",
+                "saddle",
+                "hopf",
+            ]
         output_fname, output_steps_fname = initialize_output(
             filename, headers_output, output_steps
         )
@@ -222,6 +247,7 @@ class Continuation:
             self.x,
             self.u,
             self.lmbda,
+            self.nvar,
             True,
             False,
             False,

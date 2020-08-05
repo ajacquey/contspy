@@ -112,7 +112,7 @@ def plot_continuation_results(filename, nvar=1):
     fig, axes = plt.subplots(1, nvar)
     if nvar > 1:
         for k in range(nvar):
-            initialize_plot(axes[k], "$||u_{" + str(k) + "}||_{\infty}$")
+            initialize_plot(axes[k], r"$||u_{" + str(k) + r"}||_{\infty}$")
             plot_continuation_lines(
                 axes[k],
                 lmbda,
@@ -125,7 +125,7 @@ def plot_continuation_results(filename, nvar=1):
                 axes[k], lmbda_saddle, u_norm_saddle[k], lmbda_hopf, u_norm_hopf[k]
             )
     else:
-        initialize_plot(axes, "$||u||_{\infty}$")
+        initialize_plot(axes, r"$||u||_{\infty}$")
         plot_continuation_lines(
             axes,
             lmbda,
@@ -167,7 +167,14 @@ def plot_continuation_lines(
     ax, lmbda, u_stable_reg, u_stable_osc, u_unstable_reg, u_unstable_osc
 ):
     """
-    
+    Plot the stable/unstable and regular/oscillatory solutions for the contiuation
+    INPUT:
+    ax: matplotlib axes
+    lmbda: array containing the bifurcation parameter values
+    u_stable_reg: infinite norm of the variable for stable and regular solutions
+    u_stable_osc: infinite norm of the variable for stable and oscillatory solutions
+    u_unstable_reg: infinite norm of the variable for unstable and regular solutions
+    u_unstable_osc: infinite norm of the variable for unstable and oscillatory solutions
 """
     ax.plot(lmbda, u_stable_reg, "-", color="blue")
     ax.plot(lmbda, u_unstable_reg, "--", color="blue")
@@ -179,7 +186,13 @@ def plot_continuation_lines(
 
 def plot_continuation_points(ax, lmbda_saddle, u_saddle, lmbda_hopf, u_hopf):
     """
-    
+    Plot the saddle and Hopf bifurcation points from the continuation results
+    INPUT
+    ax: matplotlib axes
+    lmbda_saddle: array of the bifurcation parameter values corresponding to saddle points
+    u_saddle: array of the infinite norms of the variable corresponding to saddle points
+    lmbda_hopf: array of the bifurcation parameter values corresponding to Hopf points
+    u_hopf: array of the infinite norms of the variable corresponding to Hopf points
 """
     ax.plot(lmbda_saddle, u_saddle, "o", color="blue")
     ax.plot(lmbda_hopf, u_hopf, "o", color="red")

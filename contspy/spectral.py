@@ -29,7 +29,7 @@ def cheb(N, L=1.0):
     return D, D2, x
 
 
-def applyBC(D, D2, x):
+def applyBC(array):
     """
     Apply boundary conditions
     INPUT:
@@ -41,5 +41,12 @@ def applyBC(D, D2, x):
     D2: Differentiation matrix second order
     x: Spatial discretization
   """
-    N = len(x) - 1
-    return D[1:N, 1:N], D2[1:N, 1:N], x[1:N]
+    arr_shape = array.shape
+    if len(arr_shape) == 1:
+        N = len(array) - 1
+        return array[1:N]
+    elif len(arr_shape) == 2:
+        N = len(array[0, :]) - 1
+        return array[1:N, 1:N]
+    else:
+        raise Exception("Cannot apply BC, invalid ipunt array!")

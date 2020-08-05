@@ -1,9 +1,9 @@
 from .__about__ import __version__
-from .cli import show
-from .main import solve
+from .main import Continuation
+from .plotting import plot_continuation_results
 
 __all__ = [
     "__version__",
-    "solve",
-    "show",
+    "Continuation",
+    "plot_continuation_results",
 ]

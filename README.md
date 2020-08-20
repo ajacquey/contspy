@@ -1,6 +1,6 @@
 # contspy
 
-[![gh-actions](https://img.shields.io/github/workflow/status/ajacquey/contspy/ci?style=flat-square)](https://github.com/ajacquey/contspy/actions?query=workflow%3Aci)
+[![gh-actions](https://github.com/ajacquey/contspy/workflows/Build/badge.svg)](https://github.com/ajacquey/contspy/actions?query=workflow%3Aci)
 [![travis](https://img.shields.io/travis/ajacquey/contspy.svg?style=flat-square)](https://travis-ci.org/ajacquey/contspy)
 [![codecov](https://codecov.io/gh/ajacquey/constspy/branch/master/graph/badge.svg)](https://codecov.io/gh/ajacquey/contspy)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)

@@ -6,7 +6,6 @@
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/contspy.svg)](https://pypi.org/pypi/contspy/)
 [![PyPi Version](https://img.shields.io/pypi/v/contspy.svg)](https://pypi.org/project/contspy)
 [![License](https://img.shields.io/badge/License-MIT-purple.svg)](https://github.com/ajacquey/contspy/blob/master/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/ajacquey/contspy.svg?logo=github&label=Stars&logoColor=white)](https://github.com/ajacquey/contspy)
 [![PyPi downloads](https://img.shields.io/pypi/dm/contspy.svg)](https://pypistats.org/packages/contspy)
 
 Contspy provides several tools to perform numerical continuation for partial differential equations (PDEs) using the spectral elements method.

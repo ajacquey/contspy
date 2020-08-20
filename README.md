@@ -1,9 +1,8 @@
 # contspy
 
 [![gh-actions](https://github.com/ajacquey/contspy/workflows/Build/badge.svg)](https://github.com/ajacquey/contspy/actions?query=workflow%3Aci)
-[![codecov](https://codecov.io/gh/ajacquey/constspy/branch/master/graph/badge.svg)](https://codecov.io/gh/ajacquey/contspy)
+[![codecov](https://codecov.io/gh/ajacquey/contspy/branch/master/graph/badge.svg)](https://codecov.io/gh/ajacquey/contspy)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![awesome](https://img.shields.io/badge/awesome-yes-8209ba.svg)](https://github.com/ajacquey/contspy)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/contspy.svg)](https://pypi.org/pypi/contspy/)
 [![PyPi Version](https://img.shields.io/pypi/v/contspy.svg)](https://pypi.org/project/contspy)
 [![License](https://img.shields.io/badge/License-MIT-purple.svg)](https://github.com/ajacquey/contspy/blob/master/LICENSE)

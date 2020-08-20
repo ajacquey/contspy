@@ -9,3 +9,7 @@ build/
 *.egg-info/
 .pytest_cache/
 .DS_Store
+# Results from tests
+test/*_out.png
+test/*_out.csv
+test/steps/*

@@ -118,6 +118,7 @@ class Continuation:
             self.lmbda = lmbda
             self.du_ds = du_ds
             self.dlmbda_ds = dlmbda_ds
+            self.stability = stability
 
             # Output results
             write_output(
@@ -283,6 +284,8 @@ class Continuation:
         if self.stability != stability and oscillation:
             print(colored("Hopf point tracking algorithm!", "red"))
             u, lmbda, newton_success = self.hopf_point_locator(eigvals, eigvecs)
+
+            # stability = False
             oscillation = True
             saddle = False
             hopf = True

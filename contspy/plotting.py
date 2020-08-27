@@ -112,7 +112,9 @@ def plot_continuation_results(filename, nvar=1):
     fig, axes = plt.subplots(1, nvar)
     if nvar > 1:
         for k in range(nvar):
-            initialize_plot(axes[k], r"$||u_{" + str(k) + r"}||_{\infty}$")
+            initialize_plot(
+                axes[k], r"$\lambda$", r"$||u_{" + str(k) + r"}||_{\infty}$"
+            )
             plot_continuation_lines(
                 axes[k],
                 lmbda,
@@ -125,7 +127,7 @@ def plot_continuation_results(filename, nvar=1):
                 axes[k], lmbda_saddle, u_norm_saddle[k], lmbda_hopf, u_norm_hopf[k]
             )
     else:
-        initialize_plot(axes, r"$||u||_{\infty}$")
+        initialize_plot(axes, r"$\lambda$", r"$||u||_{\infty}$")
         plot_continuation_lines(
             axes,
             lmbda,
@@ -147,12 +149,65 @@ def plot_continuation_results(filename, nvar=1):
     return None
 
 
-def initialize_plot(ax, label):
+def plot_transient_results(filename, nvar=1):
     """
 
 """
-    ax.set_xlabel(r"$\lambda$", fontsize=18)
-    ax.set_ylabel(label, fontsize=18)
+    # Path to script
+    script_file = os.path.abspath(sys.argv[0]).split("/")[-1]
+    filename = os.path.abspath(sys.argv[0]).replace(script_file, filename)
+    # Check if file exists
+    if not os.path.exists(filename):
+        raise Exception(
+            "File",
+            filename,
+            "does not exits, please check the name and path of the given file!",
+        )
+
+    print()
+    print("Reading data stored in file", filename, "...")
+
+    # Load data
+    cols = [k + 1 for k in range(nvar)]
+    time = np.loadtxt(
+        filename, dtype=float, delimiter=",", skiprows=1, unpack=True, usecols=[0]
+    )
+    u_norm = np.loadtxt(
+        filename, dtype=float, delimiter=",", skiprows=1, unpack=False, usecols=cols
+    )
+
+    if nvar > 1:
+        u_norm = list(u_norm.T)
+
+    # Figure name
+    fig_filename = os.path.splitext(os.path.abspath(filename))[0] + ".png"
+
+    # Plot
+    plt.rc("text", usetex=True)
+    fig, axes = plt.subplots(1, nvar)
+    if nvar > 1:
+        for k in range(nvar):
+            initialize_plot(axes[k], r"$t$", r"$||u_{" + str(k) + r"}||_{\infty}$")
+            plot_transient_lines(axes[k], time, u_norm[k])
+    else:
+        initialize_plot(axes, r"$t$", r"$||u||_{\infty}$")
+        plot_transient_lines(axes, time, u_norm)
+
+    # ax.set_xlim(0.0, 1.2)
+    # ax.set_ylim(0.0, 15.0)
+    fig.set_size_inches(8 * nvar, 6)
+    fig.savefig(fig_filename, type="PNG", bbox_inches="tight", transparent=False)
+    print("Plot of transient results in file", fig_filename, "completed!")
+
+    return None
+
+
+def initialize_plot(ax, xlabel, ylabel):
+    """
+
+"""
+    ax.set_xlabel(xlabel, fontsize=18)
+    ax.set_ylabel(ylabel, fontsize=18)
     ax.tick_params(axis="x", labelsize=16)
     ax.tick_params(axis="y", labelsize=16)
     ax.xaxis.set_ticks_position("bottom")
@@ -196,5 +251,18 @@ def plot_continuation_points(ax, lmbda_saddle, u_saddle, lmbda_hopf, u_hopf):
 """
     ax.plot(lmbda_saddle, u_saddle, "o", color="blue")
     ax.plot(lmbda_hopf, u_hopf, "o", color="red")
+
+    return None
+
+
+def plot_transient_lines(ax, time, u):
+    """
+    Plot the stable/unstable and regular/oscillatory solutions for the contiuation
+    INPUT:
+    ax: matplotlib axes
+    time: array containing the time values
+    u: infinite norm of the variable
+"""
+    ax.plot(time, u, "-", color="blue")
 
     return None

@@ -1,7 +1,7 @@
 import numpy as np
 from termcolor import colored
 
-from .outputs import initialize_output, write_output
+from .outputs import initialize_output, write_cont_output
 from .solvers import solve_Newton
 from .spectral import applyBC, cheb
 
@@ -21,12 +21,6 @@ class Continuation:
     def Res(self, u, lmbda):
         """
         The residual to solve for the system
-    """
-        raise Exception("You need to implement this method in your child class!")
-
-    def dRes_dlmbda(self, u, lmbda):
-        """
-        The residual derivative wrt the lambda parameter
     """
         raise Exception("You need to implement this method in your child class!")
 
@@ -121,7 +115,7 @@ class Continuation:
             self.stability = stability
 
             # Output results
-            write_output(
+            write_cont_output(
                 k,
                 output_fname,
                 output_steps_fname,
@@ -241,7 +235,7 @@ class Continuation:
         output_fname, output_steps_fname = initialize_output(
             filename, headers_output, output_steps
         )
-        write_output(
+        write_cont_output(
             0,
             output_fname,
             output_steps_fname,

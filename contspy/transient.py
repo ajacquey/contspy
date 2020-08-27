@@ -115,7 +115,7 @@ class Transient:
 
     def initial_step(self, u0, dt, filename, output_steps):
         """
-        
+        Initialize transient solve
         INPUT
         u0: initial conditions of the solution
         dt: initial time step size

@@ -6,8 +6,7 @@ import numpy as np
 
 def initialize_output(filename, headers, output_steps):
     """
-    Initialize the output of continuation in a CSV file
-"""
+    Initialize the output of continuation in a CSV file"""
     output_fname = get_output_filename(filename)
     np.savetxt(
         output_fname, [np.asarray(headers)], delimiter=",", fmt="%s", comments=""
@@ -46,8 +45,7 @@ def write_cont_output(
     hopf,
 ):
     """
-    Output continuation step and spectral step in a CSV file
-"""
+    Output continuation step and spectral step in a CSV file"""
     # Continuation
     if nvar > 1:
         uvars = np.split(u, nvar)
@@ -75,7 +73,11 @@ def write_cont_output(
     fmt[1:1] = fmt_var
     with open(output_fname, "a+", newline="") as write_obj:
         np.savetxt(
-            write_obj, [results], fmt=fmt, comments="", delimiter=",",
+            write_obj,
+            [results],
+            fmt=fmt,
+            comments="",
+            delimiter=",",
         )
 
     # Spectral
@@ -102,8 +104,7 @@ def write_cont_output(
 
 def write_trans_output(k, output_fname, output_steps_fname, x, u, time, nvar):
     """
-    Output transient step and spectral step in a CSV file
-"""
+    Output transient step and spectral step in a CSV file"""
     # Transient
     if nvar > 1:
         uvars = np.split(u, nvar)
@@ -120,7 +121,11 @@ def write_trans_output(k, output_fname, output_steps_fname, x, u, time, nvar):
     fmt[1:1] = fmt_var
     with open(output_fname, "a+", newline="") as write_obj:
         np.savetxt(
-            write_obj, [results], fmt=fmt, comments="", delimiter=",",
+            write_obj,
+            [results],
+            fmt=fmt,
+            comments="",
+            delimiter=",",
         )
 
     # Spectral
@@ -147,8 +152,7 @@ def write_trans_output(k, output_fname, output_steps_fname, x, u, time, nvar):
 
 def get_output_filename(filename):
     """
-  Get the file name for the output CSV file
-"""
+    Get the file name for the output CSV file"""
     if filename is None:
         script_fname = os.path.splitext(os.path.abspath(sys.argv[0]))[0]
         output_fname = script_fname + "_out.csv"

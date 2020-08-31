@@ -10,7 +10,7 @@ def solve_Newton(
     J is the Jacobian of R. Both R and J must be functions of x.
     At input, x holds the start value. The iteration continues
     until ||F|| < abs_tol or ||F|| / ||F0|| < rel_tol.
-  """
+    """
 
     # Initial Residuals
     u = u0

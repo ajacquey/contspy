@@ -6,9 +6,7 @@ import numpy as np
 
 
 def split_stability_results(u_norm, stability, oscillation):
-    """
-
-"""
+    """"""
     u_norm_stable_reg = np.ones_like(u_norm) * np.NaN
     u_norm_unstable_reg = np.ones_like(u_norm) * np.NaN
     u_norm_stable_osc = np.ones_like(u_norm) * np.NaN
@@ -28,9 +26,7 @@ def split_stability_results(u_norm, stability, oscillation):
 
 
 def get_bifurcation_points(lmbda, u_norm, saddle, hopf):
-    """
-
-"""
+    """"""
     lmbda_saddle = lmbda[saddle]
     u_norm_saddle = u_norm[saddle]
     lmbda_hopf = lmbda[hopf]
@@ -40,9 +36,7 @@ def get_bifurcation_points(lmbda, u_norm, saddle, hopf):
 
 
 def plot_continuation_results(filename, nvar=1):
-    """
-
-"""
+    """"""
     # Path to script
     script_file = os.path.abspath(sys.argv[0]).split("/")[-1]
     filename = os.path.abspath(sys.argv[0]).replace(script_file, filename)
@@ -67,7 +61,12 @@ def plot_continuation_results(filename, nvar=1):
     )
     cols = [k + nvar + 1 for k in range(4)]
     stability, oscillation, saddle, hopf = np.loadtxt(
-        filename, dtype=bool, delimiter=",", skiprows=1, unpack=True, usecols=cols,
+        filename,
+        dtype=bool,
+        delimiter=",",
+        skiprows=1,
+        unpack=True,
+        usecols=cols,
     )
 
     if nvar > 1:
@@ -150,9 +149,7 @@ def plot_continuation_results(filename, nvar=1):
 
 
 def plot_transient_results(filename, nvar=1):
-    """
-
-"""
+    """"""
     # Path to script
     script_file = os.path.abspath(sys.argv[0]).split("/")[-1]
     filename = os.path.abspath(sys.argv[0]).replace(script_file, filename)
@@ -203,9 +200,7 @@ def plot_transient_results(filename, nvar=1):
 
 
 def initialize_plot(ax, xlabel, ylabel):
-    """
-
-"""
+    """"""
     ax.set_xlabel(xlabel, fontsize=18)
     ax.set_ylabel(ylabel, fontsize=18)
     ax.tick_params(axis="x", labelsize=16)
@@ -229,8 +224,7 @@ def plot_continuation_lines(
     u_stable_reg: infinite norm of the variable for stable and regular solutions
     u_stable_osc: infinite norm of the variable for stable and oscillatory solutions
     u_unstable_reg: infinite norm of the variable for unstable and regular solutions
-    u_unstable_osc: infinite norm of the variable for unstable and oscillatory solutions
-"""
+    u_unstable_osc: infinite norm of the variable for unstable and oscillatory solutions"""
     ax.plot(lmbda, u_stable_reg, "-", color="blue")
     ax.plot(lmbda, u_unstable_reg, "--", color="blue")
     ax.plot(lmbda, u_stable_osc, "-", color="red")
@@ -247,8 +241,7 @@ def plot_continuation_points(ax, lmbda_saddle, u_saddle, lmbda_hopf, u_hopf):
     lmbda_saddle: array of the bifurcation parameter values corresponding to saddle points
     u_saddle: array of the infinite norms of the variable corresponding to saddle points
     lmbda_hopf: array of the bifurcation parameter values corresponding to Hopf points
-    u_hopf: array of the infinite norms of the variable corresponding to Hopf points
-"""
+    u_hopf: array of the infinite norms of the variable corresponding to Hopf points"""
     ax.plot(lmbda_saddle, u_saddle, "o", color="blue")
     ax.plot(lmbda_hopf, u_hopf, "o", color="red")
 
@@ -261,8 +254,7 @@ def plot_transient_lines(ax, time, u):
     INPUT:
     ax: matplotlib axes
     time: array containing the time values
-    u: infinite norm of the variable
-"""
+    u: infinite norm of the variable"""
     ax.plot(time, u, "-", color="blue")
 
     return None

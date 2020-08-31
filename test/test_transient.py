@@ -12,14 +12,14 @@ class Diffusion(Transient):
 
     def Res(self, u):
         """
-      The residual to solve for the system
-    """
+        The residual to solve for the system
+        """
         return (u - self.u) / self.dt - self.k * np.dot(self.D2, u)
 
     def Jac(self, u):
         """
-      The jacobian of the system
-    """
+        The jacobian of the system
+        """
         return np.diag(np.ones_like(u)) / self.dt - self.k * self.D2
 
 

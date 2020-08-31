@@ -8,20 +8,20 @@ from contspy import Continuation, plot_continuation_results
 class Bratu1d(Continuation):
     def Res(self, u, lmbda):
         """
-      The residual to solve for the system
-    """
+        The residual to solve for the system
+        """
         return np.dot(self.D2, u) + lmbda * np.exp(u)
 
     def dRes_dlmbda(self, u, lmbda):
         """
-      The residual derivative wrt the lambda parameter
-    """
+        The residual derivative wrt the lambda parameter
+        """
         return np.exp(u)
 
     def Jac(self, u, lmbda):
         """
-      The jacobian of the system
-    """
+        The jacobian of the system
+        """
         return self.D2 + lmbda * np.diag(np.exp(u))
 
 

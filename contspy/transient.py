@@ -21,13 +21,13 @@ class Transient:
     def Res(self, u):
         """
         The residual to solve for the system
-    """
+        """
         raise Exception("You need to implement this method in your child class!")
 
     def Jac(self, u):
         """
         The jacobian of the system
-    """
+        """
         raise Exception("You need to implement this method in your child class!")
 
     def run(
@@ -50,7 +50,7 @@ class Transient:
         abs_tol: the absolute tolerance for the Newton solver
         rel_tol: the relative tolerance for the Newton solver
         max_iters: maximum number of iteration for the Newton solver
-    """
+        """
         # INITIALIZATION
         k = 0  # iteration
         t = 0  # time
@@ -123,7 +123,7 @@ class Transient:
         output_steps: boolean to specify whether each step should be outputted
         OUTPUT
         output_fname: output file name (with path) for transient output
-    """
+        """
         k0 = 0
         t0 = 0
         dt0 = 0

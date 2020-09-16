@@ -73,7 +73,7 @@ class Transient:
             while True:
                 if newton_success:
                     break
-
+                
                 print()
                 print(f"Time step {k}, time = {t:.3e}, dt = {dt:.3e}")
 
@@ -86,6 +86,14 @@ class Transient:
                 # Cut step size
                 if not newton_success:
                     dt /= 2.0
+                    self.dt = dt
+                # Recover cut step size
+                if newton_success and (dt < step_size):
+                    dt_tmp = dt * 2.0
+                    if dt_tmp > step_size:
+                        dt = step_size
+                    else:
+                        dt = dt_tmp
                     self.dt = dt
 
             # Save current calues

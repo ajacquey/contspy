@@ -18,8 +18,8 @@ class Alevizos(Continuation):
 
     def Res(self, u, lmbda):
         """
-      The residual to solve for the system
-    """
+        The residual to solve for the system
+        """
         res0 = self.Res0(u, lmbda)
         res1 = self.Res1(u, lmbda)
 
@@ -28,7 +28,7 @@ class Alevizos(Continuation):
     def Res0(self, u, lmbda):
         """
         Temperature equation as in Alevizos et al. (2016) eq. 6
-    """
+        """
         u0, u1 = np.split(u, 2)
         return (
             np.dot(self.D2, u0)
@@ -39,7 +39,7 @@ class Alevizos(Continuation):
     def Res1(self, u, lmbda):
         """
         Only diffusion here
-    """
+        """
         u0, u1 = np.split(u, 2)
         return np.dot(self.D2, u1) / self.Le + self.mur * (1.0 - self.phi) * np.exp(
             np.divide(self.Arc * u0, 1.0 + u0)
@@ -47,8 +47,8 @@ class Alevizos(Continuation):
 
     def Jac(self, u, lmbda):
         """
-      The jacobian of the system
-    """
+        The jacobian of the system
+        """
         jac00 = self.Jac00(u, lmbda)
         jac01 = self.Jac01(u, lmbda)
         jac10 = self.Jac10(u, lmbda)
@@ -58,7 +58,7 @@ class Alevizos(Continuation):
     def Jac00(self, u, lmbda):
         """
         Derivative of Res0 wrt u0
-    """
+        """
         u0, u1 = np.split(u, 2)
         return (
             self.D2
@@ -84,7 +84,7 @@ class Alevizos(Continuation):
     def Jac01(self, u, lmbda):
         """
         Derivative of Res0 wrt u1
-    """
+        """
         u0, u1 = np.split(u, 2)
         return (
             -lmbda
@@ -95,7 +95,7 @@ class Alevizos(Continuation):
     def Jac10(self, u, lmbda):
         """
         Derivative of Res1 wrt u0
-    """
+        """
         u0, u1 = np.split(u, 2)
         return (
             self.mur
@@ -111,7 +111,7 @@ class Alevizos(Continuation):
     def Jac11(self, u, lmbda):
         """
         Derivative of Res1 wrt u1
-    """
+        """
         return self.D2 / self.Le
 
 

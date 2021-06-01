@@ -6,9 +6,7 @@ import numpy as np
 
 
 def split_stability_results(u_norm, stability, oscillation):
-    """
-
-"""
+    """"""
     u_norm_stable_reg = np.ones_like(u_norm) * np.NaN
     u_norm_unstable_reg = np.ones_like(u_norm) * np.NaN
     u_norm_stable_osc = np.ones_like(u_norm) * np.NaN
@@ -28,9 +26,7 @@ def split_stability_results(u_norm, stability, oscillation):
 
 
 def get_bifurcation_points(lmbda, u_norm, saddle, hopf):
-    """
-
-"""
+    """"""
     lmbda_saddle = lmbda[saddle]
     u_norm_saddle = u_norm[saddle]
     lmbda_hopf = lmbda[hopf]
@@ -40,9 +36,7 @@ def get_bifurcation_points(lmbda, u_norm, saddle, hopf):
 
 
 def plot_continuation_results(filename, nvar=1):
-    """
-
-"""
+    """"""
     # Path to script
     script_file = os.path.abspath(sys.argv[0]).split("/")[-1]
     filename = os.path.abspath(sys.argv[0]).replace(script_file, filename)
@@ -67,7 +61,12 @@ def plot_continuation_results(filename, nvar=1):
     )
     cols = [k + nvar + 1 for k in range(4)]
     stability, oscillation, saddle, hopf = np.loadtxt(
-        filename, dtype=bool, delimiter=",", skiprows=1, unpack=True, usecols=cols,
+        filename,
+        dtype=bool,
+        delimiter=",",
+        skiprows=1,
+        unpack=True,
+        usecols=cols,
     )
 
     if nvar > 1:
@@ -112,7 +111,9 @@ def plot_continuation_results(filename, nvar=1):
     fig, axes = plt.subplots(1, nvar)
     if nvar > 1:
         for k in range(nvar):
-            initialize_plot(axes[k], r"$||u_{" + str(k) + r"}||_{\infty}$")
+            initialize_plot(
+                axes[k], r"$\lambda$", r"$||u_{" + str(k) + r"}||_{\infty}$"
+            )
             plot_continuation_lines(
                 axes[k],
                 lmbda,
@@ -125,7 +126,7 @@ def plot_continuation_results(filename, nvar=1):
                 axes[k], lmbda_saddle, u_norm_saddle[k], lmbda_hopf, u_norm_hopf[k]
             )
     else:
-        initialize_plot(axes, r"$||u||_{\infty}$")
+        initialize_plot(axes, r"$\lambda$", r"$||u||_{\infty}$")
         plot_continuation_lines(
             axes,
             lmbda,
@@ -147,12 +148,61 @@ def plot_continuation_results(filename, nvar=1):
     return None
 
 
-def initialize_plot(ax, label):
-    """
+def plot_transient_results(filename, nvar=1):
+    """"""
+    # Path to script
+    script_file = os.path.abspath(sys.argv[0]).split("/")[-1]
+    filename = os.path.abspath(sys.argv[0]).replace(script_file, filename)
+    # Check if file exists
+    if not os.path.exists(filename):
+        raise Exception(
+            "File",
+            filename,
+            "does not exits, please check the name and path of the given file!",
+        )
 
-"""
-    ax.set_xlabel(r"$\lambda$", fontsize=18)
-    ax.set_ylabel(label, fontsize=18)
+    print()
+    print("Reading data stored in file", filename, "...")
+
+    # Load data
+    cols = [k + 1 for k in range(nvar)]
+    time = np.loadtxt(
+        filename, dtype=float, delimiter=",", skiprows=1, unpack=True, usecols=[0]
+    )
+    u_norm = np.loadtxt(
+        filename, dtype=float, delimiter=",", skiprows=1, unpack=False, usecols=cols
+    )
+
+    if nvar > 1:
+        u_norm = list(u_norm.T)
+
+    # Figure name
+    fig_filename = os.path.splitext(os.path.abspath(filename))[0] + ".png"
+
+    # Plot
+    plt.rc("text", usetex=True)
+    fig, axes = plt.subplots(1, nvar)
+    if nvar > 1:
+        for k in range(nvar):
+            initialize_plot(axes[k], r"$t$", r"$||u_{" + str(k) + r"}||_{\infty}$")
+            plot_transient_lines(axes[k], time, u_norm[k])
+    else:
+        initialize_plot(axes, r"$t$", r"$||u||_{\infty}$")
+        plot_transient_lines(axes, time, u_norm)
+
+    # ax.set_xlim(0.0, 1.2)
+    # ax.set_ylim(0.0, 15.0)
+    fig.set_size_inches(8 * nvar, 6)
+    fig.savefig(fig_filename, type="PNG", bbox_inches="tight", transparent=False)
+    print("Plot of transient results in file", fig_filename, "completed!")
+
+    return None
+
+
+def initialize_plot(ax, xlabel, ylabel):
+    """"""
+    ax.set_xlabel(xlabel, fontsize=18)
+    ax.set_ylabel(ylabel, fontsize=18)
     ax.tick_params(axis="x", labelsize=16)
     ax.tick_params(axis="y", labelsize=16)
     ax.xaxis.set_ticks_position("bottom")
@@ -174,8 +224,7 @@ def plot_continuation_lines(
     u_stable_reg: infinite norm of the variable for stable and regular solutions
     u_stable_osc: infinite norm of the variable for stable and oscillatory solutions
     u_unstable_reg: infinite norm of the variable for unstable and regular solutions
-    u_unstable_osc: infinite norm of the variable for unstable and oscillatory solutions
-"""
+    u_unstable_osc: infinite norm of the variable for unstable and oscillatory solutions"""
     ax.plot(lmbda, u_stable_reg, "-", color="blue")
     ax.plot(lmbda, u_unstable_reg, "--", color="blue")
     ax.plot(lmbda, u_stable_osc, "-", color="red")
@@ -192,9 +241,20 @@ def plot_continuation_points(ax, lmbda_saddle, u_saddle, lmbda_hopf, u_hopf):
     lmbda_saddle: array of the bifurcation parameter values corresponding to saddle points
     u_saddle: array of the infinite norms of the variable corresponding to saddle points
     lmbda_hopf: array of the bifurcation parameter values corresponding to Hopf points
-    u_hopf: array of the infinite norms of the variable corresponding to Hopf points
-"""
+    u_hopf: array of the infinite norms of the variable corresponding to Hopf points"""
     ax.plot(lmbda_saddle, u_saddle, "o", color="blue")
     ax.plot(lmbda_hopf, u_hopf, "o", color="red")
+
+    return None
+
+
+def plot_transient_lines(ax, time, u):
+    """
+    Plot the stable/unstable and regular/oscillatory solutions for the contiuation
+    INPUT:
+    ax: matplotlib axes
+    time: array containing the time values
+    u: infinite norm of the variable"""
+    ax.plot(time, u, "-", color="blue")
 
     return None

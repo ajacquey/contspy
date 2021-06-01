@@ -6,8 +6,7 @@ import numpy as np
 
 def initialize_output(filename, headers, output_steps):
     """
-    Initialize the output of continuation in a CSV file
-"""
+    Initialize the output of continuation in a CSV file"""
     output_fname = get_output_filename(filename)
     np.savetxt(
         output_fname, [np.asarray(headers)], delimiter=",", fmt="%s", comments=""
@@ -32,7 +31,7 @@ def initialize_output(filename, headers, output_steps):
     return output_fname, output_steps_fname
 
 
-def write_output(
+def write_cont_output(
     k,
     output_fname,
     output_steps_fname,
@@ -46,8 +45,7 @@ def write_output(
     hopf,
 ):
     """
-    Output continuation step and spectral step in a CSV file
-"""
+    Output continuation step and spectral step in a CSV file"""
     # Continuation
     if nvar > 1:
         uvars = np.split(u, nvar)
@@ -75,7 +73,59 @@ def write_output(
     fmt[1:1] = fmt_var
     with open(output_fname, "a+", newline="") as write_obj:
         np.savetxt(
-            write_obj, [results], fmt=fmt, comments="", delimiter=",",
+            write_obj,
+            [results],
+            fmt=fmt,
+            comments="",
+            delimiter=",",
+        )
+
+    # Spectral
+    if bool(output_steps_fname):  # string not empty
+        filename = output_steps_fname + str(k) + ".csv"
+        if nvar > 1:
+            uvars = np.split(u, nvar)
+            uvars = [np.concatenate([[0.0], uvar, [0.0]]) for uvar in uvars]
+            uvars = np.array(uvars)
+            header = ["x"]
+            header_var = ["u" + str(int(k)) for k in range(nvar)]
+            header[1:1] = header_var
+            header = ",".join(header)
+            data = np.column_stack((np.flip(x), uvars.transpose()))
+        else:
+            u = np.concatenate([[0.0], u, [0.0]])
+            header = "x,u"
+            data = np.column_stack((np.flip(x), u))
+        np.savetxt(
+            filename, data, delimiter=",", fmt="%1.4e", header=header, comments=""
+        )
+    return None
+
+
+def write_trans_output(k, output_fname, output_steps_fname, x, u, time, nvar):
+    """
+    Output transient step and spectral step in a CSV file"""
+    # Transient
+    if nvar > 1:
+        uvars = np.split(u, nvar)
+        results_u = [np.linalg.norm(uvar, np.inf) for uvar in uvars]
+        results = [
+            time,
+        ]
+        results[1:1] = results_u
+    else:
+        results = [time, np.linalg.norm(u, np.inf)]
+
+    fmt = ["%1.4e"]
+    fmt_var = ["%1.4e"] * nvar
+    fmt[1:1] = fmt_var
+    with open(output_fname, "a+", newline="") as write_obj:
+        np.savetxt(
+            write_obj,
+            [results],
+            fmt=fmt,
+            comments="",
+            delimiter=",",
         )
 
     # Spectral
@@ -102,8 +152,7 @@ def write_output(
 
 def get_output_filename(filename):
     """
-  Get the file name for the output CSV file
-"""
+    Get the file name for the output CSV file"""
     if filename is None:
         script_fname = os.path.splitext(os.path.abspath(sys.argv[0]))[0]
         output_fname = script_fname + "_out.csv"

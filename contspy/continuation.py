@@ -1,7 +1,7 @@
 import numpy as np
 from termcolor import colored
 
-from .outputs import initialize_output, write_output
+from .outputs import initialize_output, write_cont_output
 from .solvers import solve_Newton
 from .spectral import applyBC, cheb
 
@@ -21,19 +21,13 @@ class Continuation:
     def Res(self, u, lmbda):
         """
         The residual to solve for the system
-    """
-        raise Exception("You need to implement this method in your child class!")
-
-    def dRes_dlmbda(self, u, lmbda):
         """
-        The residual derivative wrt the lambda parameter
-    """
         raise Exception("You need to implement this method in your child class!")
 
     def Jac(self, u, lmbda):
         """
         The jacobian of the system
-    """
+        """
         raise Exception("You need to implement this method in your child class!")
 
     def run(
@@ -58,7 +52,7 @@ class Continuation:
         abs_tol: the absolute tolerance for the Newton solver
         rel_tol: the relative tolerance for the Newton solver
         max_iters: maximum number of iteration for the Newton solver
-    """
+        """
         # INITIALIZATION
         lmbda = lmbda0  # bifurcation parameter
         k = 0  # iteration
@@ -121,7 +115,7 @@ class Continuation:
             self.stability = stability
 
             # Output results
-            write_output(
+            write_cont_output(
                 k,
                 output_fname,
                 output_steps_fname,
@@ -153,8 +147,7 @@ class Continuation:
         return None
 
     def tangent_predictor(self, u, lmbda, ds):
-        """
-    """
+        """"""
         # du/dlmbda
         delta = 1.0e-08
         eps1 = delta * (np.abs(lmbda) + delta)
@@ -186,7 +179,7 @@ class Continuation:
         OUTPUT
         u: initial solution
         output_fname: output file name (with path) for continuation output
-    """
+        """
         k0 = 0
         s0 = 0
         ds0 = 0
@@ -241,7 +234,7 @@ class Continuation:
         output_fname, output_steps_fname = initialize_output(
             filename, headers_output, output_steps
         )
-        write_output(
+        write_cont_output(
             0,
             output_fname,
             output_steps_fname,
@@ -259,8 +252,7 @@ class Continuation:
         return output_fname, output_steps_fname
 
     def step(self, ds, abs_tol, rel_tol, max_iters):
-        """
-    """
+        """"""
         # Tangent predictor for next values
         u = self.u + self.du_ds * ds
         lmbda = self.lmbda + self.dlmbda_ds * ds
@@ -268,7 +260,12 @@ class Continuation:
         # Arc length continuation
         # New values of u and lmbda
         u, lmbda, newton_success = self.arc_length_continuation(
-            u, lmbda, ds, abs_tol, rel_tol, max_iters,
+            u,
+            lmbda,
+            ds,
+            abs_tol,
+            rel_tol,
+            max_iters,
         )
 
         # Check regularity and stability of new point
@@ -319,7 +316,13 @@ class Continuation:
         )
 
     def arc_length_continuation(
-        self, u, lmbda, ds, abs_tol, rel_tol, max_iters,
+        self,
+        u,
+        lmbda,
+        ds,
+        abs_tol,
+        rel_tol,
+        max_iters,
     ):
         """
         Arc length continuation. Implementation based on:
@@ -327,7 +330,7 @@ class Continuation:
         INPUT
 
         OUTPUT
-    """
+        """
         # Iterations
         num_newton_steps = 0
         newton_success = False

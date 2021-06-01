@@ -12,8 +12,8 @@ class Coupled(Continuation):
 
     def Res(self, u, lmbda):
         """
-      The residual to solve for the system
-    """
+        The residual to solve for the system
+        """
         res0 = self.Res0(u, lmbda)
         res1 = self.Res1(u, lmbda)
 
@@ -22,21 +22,21 @@ class Coupled(Continuation):
     def Res0(self, u, lmbda):
         """
         Same residual as in test_S_coupled.py
-    """
+        """
         u0, _ = np.split(u, 2)
         return np.dot(self.D2, u0) + lmbda * np.exp(np.divide(self.Ar * u0, 1.0 + u0))
 
     def Res1(self, u, lmbda):
         """
         Only diffusion here
-    """
+        """
         _, u1 = np.split(u, 2)
         return np.dot(self.D2, u1)
 
     def Jac(self, u, lmbda):
         """
-      The jacobian of the system
-    """
+        The jacobian of the system
+        """
         jac00 = self.Jac00(u, lmbda)
         jac01 = self.Jac01(u, lmbda)
         jac10 = self.Jac10(u, lmbda)
@@ -46,7 +46,7 @@ class Coupled(Continuation):
     def Jac00(self, u, lmbda):
         """
         Derivative of Res0 wrt u0
-    """
+        """
         u0, _ = np.split(u, 2)
         return self.D2 + lmbda * self.Ar * np.diag(
             np.divide(np.exp(np.divide(self.Ar * u0, 1.0 + u0)), np.square(1.0 + u0))
@@ -55,21 +55,21 @@ class Coupled(Continuation):
     def Jac01(self, u, lmbda):
         """
         Derivative of Res0 wrt u1
-    """
+        """
         u0, u1 = np.split(u, 2)
         return np.zeros((len(u0), len(u1)))
 
     def Jac10(self, u, lmbda):
         """
         Derivative of Res1 wrt u0
-    """
+        """
         u0, u1 = np.split(u, 2)
         return np.zeros((len(u1), len(u0)))
 
     def Jac11(self, u, lmbda):
         """
         Derivative of Res1 wrt u1
-    """
+        """
         return self.D2
 
 

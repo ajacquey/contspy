@@ -12,14 +12,14 @@ class SCurve(Continuation):
 
     def Res(self, u, lmbda):
         """
-      The residual to solve for the system
-    """
+        The residual to solve for the system
+        """
         return np.dot(self.D2, u) + lmbda * np.exp(np.divide(self.Ar * u, 1.0 + u))
 
     def Jac(self, u, lmbda):
         """
-      The jacobian of the system
-    """
+        The jacobian of the system
+        """
         return self.D2 + lmbda * self.Ar * np.diag(
             np.divide(np.exp(np.divide(self.Ar * u, 1.0 + u)), np.square(1.0 + u))
         )

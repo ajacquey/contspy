@@ -36,6 +36,10 @@ class Continuation:
         lmbda0,
         step_size,
         max_steps,
+        adaptive_steps=False,
+        stepsize_aggressiveness=2,
+        stepsize_max=float("inf"),
+        target_newton_steps=10,
         abs_tol=1.0e-08,
         rel_tol=1.0e-08,
         max_iters=200,
@@ -93,6 +97,7 @@ class Continuation:
 
                 (
                     newton_success,
+                    newton_steps,
                     u,
                     lmbda,
                     du_ds,
@@ -137,6 +142,16 @@ class Continuation:
             if hopf:
                 n_hopf += 1
 
+            # Stepsize update
+            if adaptive_steps:
+                ds *= (
+                    1
+                    + stepsize_aggressiveness
+                    * ((target_newton_steps - newton_steps) / (target_newton_steps - 1))
+                    ** 2
+                )
+                ds = min(stepsize_max, ds)
+
         print()
         print(colored("Arc-length continuation complete!", "green"))
         print(
@@ -147,7 +162,7 @@ class Continuation:
         return None
 
     def tangent_predictor(self, u, lmbda, ds):
-        """"""
+        """ """
         # du/dlmbda
         delta = 1.0e-08
         eps1 = delta * (np.abs(lmbda) + delta)
@@ -252,14 +267,14 @@ class Continuation:
         return output_fname, output_steps_fname
 
     def step(self, ds, abs_tol, rel_tol, max_iters):
-        """"""
+        """ """
         # Tangent predictor for next values
         u = self.u + self.du_ds * ds
         lmbda = self.lmbda + self.dlmbda_ds * ds
 
         # Arc length continuation
         # New values of u and lmbda
-        u, lmbda, newton_success = self.arc_length_continuation(
+        u, lmbda, newton_success, newton_steps = self.arc_length_continuation(
             u,
             lmbda,
             ds,
@@ -305,6 +320,7 @@ class Continuation:
 
         return (
             newton_success,
+            newton_steps,
             u,
             lmbda,
             du_ds,
@@ -360,7 +376,7 @@ class Continuation:
                 print("lmbda = {}, ||x|| = {}".format(lmbda, np.linalg.norm(u)))
                 print(colored("Solve Converged!", "green"))
                 newton_success = True
-                return u, lmbda, newton_success
+                return u, lmbda, newton_success, num_newton_steps
 
             # Update solution
             # Solve
@@ -413,7 +429,7 @@ class Continuation:
         print("Solve diverged due to MAX_ITER.")
         print("lmbda = {}, ||x|| = {}".format(lmbda, np.linalg.norm(u)))
         print(colored("Solve did NOT converge!", "red"))
-        return u, lmbda, newton_success
+        return u, lmbda, newton_success, num_newton_steps
 
     def saddle_point_locator(self, abs_tol=1.0e-04, rel_tol=1.0e-04, max_iters=1000):
         # Initialization

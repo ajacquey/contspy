@@ -73,7 +73,7 @@ class Transient:
             while True:
                 if newton_success:
                     break
-                
+
                 print()
                 print(f"Time step {k}, time = {t:.3e}, dt = {dt:.3e}")
 

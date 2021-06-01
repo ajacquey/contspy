@@ -6,7 +6,7 @@ import numpy as np
 
 
 def split_stability_results(u_norm, stability, oscillation):
-    """"""
+    """ """
     u_norm_stable_reg = np.ones_like(u_norm) * np.NaN
     u_norm_unstable_reg = np.ones_like(u_norm) * np.NaN
     u_norm_stable_osc = np.ones_like(u_norm) * np.NaN
@@ -26,7 +26,7 @@ def split_stability_results(u_norm, stability, oscillation):
 
 
 def get_bifurcation_points(lmbda, u_norm, saddle, hopf):
-    """"""
+    """ """
     lmbda_saddle = lmbda[saddle]
     u_norm_saddle = u_norm[saddle]
     lmbda_hopf = lmbda[hopf]
@@ -36,7 +36,7 @@ def get_bifurcation_points(lmbda, u_norm, saddle, hopf):
 
 
 def plot_continuation_results(filename, nvar=1):
-    """"""
+    """ """
     # Path to script
     script_file = os.path.abspath(sys.argv[0]).split("/")[-1]
     filename = os.path.abspath(sys.argv[0]).replace(script_file, filename)
@@ -142,14 +142,14 @@ def plot_continuation_results(filename, nvar=1):
     # ax.set_xlim(0.0, 1.2)
     # ax.set_ylim(0.0, 15.0)
     fig.set_size_inches(8 * nvar, 6)
-    fig.savefig(fig_filename, type="PNG", bbox_inches="tight", transparent=False)
+    fig.savefig(fig_filename, format="PNG", bbox_inches="tight", transparent=False)
     print("Plot of continuation results in file", fig_filename, "completed!")
 
     return None
 
 
 def plot_transient_results(filename, nvar=1):
-    """"""
+    """ """
     # Path to script
     script_file = os.path.abspath(sys.argv[0]).split("/")[-1]
     filename = os.path.abspath(sys.argv[0]).replace(script_file, filename)
@@ -193,14 +193,14 @@ def plot_transient_results(filename, nvar=1):
     # ax.set_xlim(0.0, 1.2)
     # ax.set_ylim(0.0, 15.0)
     fig.set_size_inches(8 * nvar, 6)
-    fig.savefig(fig_filename, type="PNG", bbox_inches="tight", transparent=False)
+    fig.savefig(fig_filename, format="PNG", bbox_inches="tight", transparent=False)
     print("Plot of transient results in file", fig_filename, "completed!")
 
     return None
 
 
 def initialize_plot(ax, xlabel, ylabel):
-    """"""
+    """ """
     ax.set_xlabel(xlabel, fontsize=18)
     ax.set_ylabel(ylabel, fontsize=18)
     ax.tick_params(axis="x", labelsize=16)
